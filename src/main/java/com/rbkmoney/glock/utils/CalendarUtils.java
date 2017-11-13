@@ -20,12 +20,14 @@ public class CalendarUtils {
         return day;
     }
 
-    public static LocalDate countTo(LocalDate from) {
-        LocalDate to = from.plusDays(1);
-
-        while (calendar.isHoliday(to)) {
-            to = to.plusDays(1);
+    public static LocalDate plusWorkDays(LocalDate today, int delayDays) {
+        LocalDate day = today;
+        for (int i = 0; i < delayDays; i++) {
+            day = day.plusDays(1);
+            while (calendar.isHoliday(day)) {
+                day = day.plusDays(1);
+            }
         }
-        return to;
+        return day;
     }
 }

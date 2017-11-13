@@ -20,9 +20,9 @@ public class CalendarUtilsTest {
     }
 
     @Test
-    public void countTo() throws Exception {
+    public void plusWorkDays() throws Exception {
         LocalDate date = LocalDate.parse("2017-11-17", DateTimeFormatter.ISO_DATE);
-        LocalDate plusOneDay = CalendarUtils.countTo(date);
+        LocalDate plusOneDay = CalendarUtils.plusWorkDays(date, 1);
         LocalDate expected = LocalDate.parse("2017-11-20", DateTimeFormatter.ISO_DATE);
         assertEquals(plusOneDay, expected);
     }
