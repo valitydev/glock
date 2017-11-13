@@ -5,6 +5,7 @@ import com.rbkmoney.glock.utils.CalendarUtils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -16,21 +17,19 @@ public class DefaultWorkingDayCalendar implements WorkingDayCalendar {
     private static final String DEFAULT_FILE_PATH = "/data/calendar.csv";
 
     private Map<Integer, Map<Integer, List<Integer>>> calendar;
-    private String filePath;
 
-    public DefaultWorkingDayCalendar(String filePath) {
-        this.filePath = filePath;
-        init();
+    public DefaultWorkingDayCalendar(Reader reader) {
+        init(reader);
     }
 
     public DefaultWorkingDayCalendar() {
-        this(DEFAULT_FILE_PATH);
+        init(new InputStreamReader(CalendarUtils.class.getResourceAsStream(DEFAULT_FILE_PATH)));
     }
 
-    private void init() {
+    protected void init(Reader streamReader) {
         Map<Integer, Map<Integer, List<Integer>>> years = new HashMap<>();
 
-        try (CSVReader reader = new CSVReader(new InputStreamReader(CalendarUtils.class.getResourceAsStream(filePath)))) {
+        try (CSVReader reader = new CSVReader(streamReader)) {
             //Skip first row
             String[] row = reader.readNext();
 
