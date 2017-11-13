@@ -12,12 +12,19 @@ import static org.junit.Assert.*;
  */
 public class CalendarUtilsTest {
     @Test
-    public void isWorkingDay() throws Exception {
-        assertTrue(CalendarUtils.isWorkingDay(LocalDate.parse("2017-11-13", DateTimeFormatter.ISO_DATE)));
+    public void minusWorkDays() throws Exception {
+        LocalDate date = LocalDate.parse("2017-11-13", DateTimeFormatter.ISO_DATE);
+        LocalDate minusOneDay = CalendarUtils.minusWorkDays(date, 1);
+        LocalDate expected = LocalDate.parse("2017-11-10", DateTimeFormatter.ISO_DATE);
+        assertEquals(minusOneDay, expected);
     }
 
     @Test
-    public void isHoliday() throws Exception {
-        assertTrue(CalendarUtils.isHoliday(LocalDate.parse("2017-11-04", DateTimeFormatter.ISO_DATE)));
+    public void countTo() throws Exception {
+        LocalDate date = LocalDate.parse("2017-11-17", DateTimeFormatter.ISO_DATE);
+        LocalDate plusOneDay = CalendarUtils.countTo(date);
+        LocalDate expected = LocalDate.parse("2017-11-20", DateTimeFormatter.ISO_DATE);
+        assertEquals(plusOneDay, expected);
     }
+
 }
