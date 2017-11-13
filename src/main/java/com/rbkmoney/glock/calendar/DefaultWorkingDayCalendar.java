@@ -16,17 +16,17 @@ public class DefaultWorkingDayCalendar implements WorkingDayCalendar {
 
     private static final String DEFAULT_FILE_PATH = "/data/calendar.csv";
 
-    private Map<Integer, Map<Integer, List<Integer>>> calendar;
+    private final Map<Integer, Map<Integer, List<Integer>>> calendar;
 
     public DefaultWorkingDayCalendar(Reader reader) {
-        init(reader);
+        calendar = initCalendar(reader);
     }
 
     public DefaultWorkingDayCalendar() {
-        init(new InputStreamReader(CalendarUtils.class.getResourceAsStream(DEFAULT_FILE_PATH)));
+        this(new InputStreamReader(CalendarUtils.class.getResourceAsStream(DEFAULT_FILE_PATH)));
     }
 
-    protected void init(Reader streamReader) {
+    protected Map<Integer, Map<Integer, List<Integer>>> initCalendar(Reader streamReader) {
         Map<Integer, Map<Integer, List<Integer>>> years = new HashMap<>();
 
         try (CSVReader reader = new CSVReader(streamReader)) {
@@ -52,9 +52,9 @@ public class DefaultWorkingDayCalendar implements WorkingDayCalendar {
                 throw new RuntimeException(String.format("Failed to read calendar from csv file, row='%s'", Arrays.toString(row)), ex);
             }
         } catch (IOException e) {
-            throw new RuntimeException("Failed to init calendar", e);
+            throw new RuntimeException("Failed to initCalendar calendar", e);
         }
-        calendar = Collections.unmodifiableMap(years);
+        return Collections.unmodifiableMap(years);
     }
 
     @Override
